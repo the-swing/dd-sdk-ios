@@ -137,31 +137,16 @@ workflows:
         inputs:
         - scheme: Datadog
         - simulator_device: iPhone 11
-        - is_clean_build: 'yes'
-        # - should_retry_test_on_fail: 'yes' # temporarily mutes flakiness until we collect more info (in RUMM-839) then fix it
+        - should_retry_test_on_fail: 'yes' # temporarily mutes flakiness until we collect more info (in RUMM-839) then fix it
         - generate_code_coverage_files: 'yes'
         - project_path: Datadog.xcworkspace
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/Datadog-unit-tests.html"
     - codecov@2.0.2:
         title: Send coverage report for `Datadog`
+        run_if: .IsCI
         inputs:
         - CODECOV_TOKEN: ${CODECOV_TOKEN}
-        - other_options: "-C $BITRISE_GIT_COMMIT -J 'Datadog' -F Datadog"
-    - xcode-test:
-        title: Run unit tests for DatadogObjc - iOS Simulator
-        inputs:
-        - scheme: Datadog
-        - simulator_device: iPhone 11
-        - is_clean_build: 'yes'
-        # - should_retry_test_on_fail: 'yes' # temporarily mutes flakiness until we collect more info (in RUMM-839) then fix it
-        - generate_code_coverage_files: 'yes'
-        - project_path: Datadog.xcworkspace
-        - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/DatadogObjc-unit-tests.html"
-    - codecov@2.0.2:
-        title: Send coverage report for `DatadogObjc`
-        inputs:
-        - CODECOV_TOKEN: ${CODECOV_TOKEN}
-        - other_options: "-C $BITRISE_GIT_COMMIT -J 'DatadogObjc' -F DatadogObjc"
+        - other_options: -C "$BITRISE_GIT_COMMIT" -J "Datadog" -F "Datadog"
     - xcode-test:
         title: Run unit tests for DatadogCrashReporting - iOS Simulator
         inputs:
@@ -172,9 +157,10 @@ workflows:
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/DatadogCrashReporting-unit-tests.html"
     - codecov@2.0.2:
         title: Send coverage report for `DatadogCrashReporting`
+        run_if: .IsCI
         inputs:
         - CODECOV_TOKEN: ${CODECOV_TOKEN}
-        - other_options: "-C $BITRISE_GIT_COMMIT -J 'DatadogCrashReporting' -F DatadogCrashReporting"
+        - other_options:  -C "$BITRISE_GIT_COMMIT" -J "DatadogCrashReporting" -F "DatadogCrashReporting"
     # - xcode-test:
     #     title: Run benchmarks - DatadogBenchmarkTests on iOS Simulator
     #     inputs:
