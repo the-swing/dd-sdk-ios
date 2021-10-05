@@ -142,6 +142,10 @@ workflows:
         - generate_code_coverage_files: 'yes'
         - project_path: Datadog.xcworkspace
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/Datadog-unit-tests.html"
+    - codecov@2.0.2:
+        title: Send coverage report for `Datadog`
+        inputs:
+        - CODECOV_TOKEN: ${CODECOV_TOKEN}
     - xcode-test:
         title: Run unit tests for DatadogObjc - iOS Simulator
         inputs:
@@ -152,6 +156,10 @@ workflows:
         - generate_code_coverage_files: 'yes'
         - project_path: Datadog.xcworkspace
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/DatadogObjc-unit-tests.html"
+    - codecov@2.0.2:
+        title: Send coverage report for `DatadogObjc`
+        inputs:
+        - CODECOV_TOKEN: ${CODECOV_TOKEN}
     - xcode-test:
         title: Run unit tests for DatadogCrashReporting - iOS Simulator
         inputs:
@@ -161,7 +169,7 @@ workflows:
         - project_path: Datadog.xcworkspace
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/DatadogCrashReporting-unit-tests.html"
     - codecov@2.0.2:
-        title: Send coverage report
+        title: Send coverage report for `DatadogCrashReporting`
         inputs:
         - CODECOV_TOKEN: ${CODECOV_TOKEN}
     # - xcode-test:
