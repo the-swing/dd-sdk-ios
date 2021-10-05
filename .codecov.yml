@@ -12,4 +12,7 @@ coverage:
   round: nearest
 
 ignore:
+  - "Carthage"
+  - "Datadog"
+  - "Tests"
   - "tools"
