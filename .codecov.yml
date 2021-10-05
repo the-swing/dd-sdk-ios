@@ -1,8 +1,8 @@
 # https://docs.codecov.io/docs/codecovyml-reference
 codecov:
   notify:
-    require_ci_to_pass: no
-    wait_for_ci: no
+    require_ci_to_pass: yes # do not bother with coverage on CI failures
+    wait_for_ci: no # send coverage without waiting for entire CI run
 
 comment: false
 

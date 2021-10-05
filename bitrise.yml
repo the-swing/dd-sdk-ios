@@ -146,6 +146,7 @@ workflows:
         title: Send coverage report for `Datadog`
         inputs:
         - CODECOV_TOKEN: ${CODECOV_TOKEN}
+        - other_options: "-C $BITRISE_GIT_COMMIT -J 'Datadog' -F Datadog"
     - xcode-test:
         title: Run unit tests for DatadogObjc - iOS Simulator
         inputs:
@@ -160,6 +161,7 @@ workflows:
         title: Send coverage report for `DatadogObjc`
         inputs:
         - CODECOV_TOKEN: ${CODECOV_TOKEN}
+        - other_options: "-C $BITRISE_GIT_COMMIT -J 'DatadogObjc' -F DatadogObjc"
     - xcode-test:
         title: Run unit tests for DatadogCrashReporting - iOS Simulator
         inputs:
@@ -172,6 +174,7 @@ workflows:
         title: Send coverage report for `DatadogCrashReporting`
         inputs:
         - CODECOV_TOKEN: ${CODECOV_TOKEN}
+        - other_options: "-C $BITRISE_GIT_COMMIT -J 'DatadogCrashReporting' -F DatadogCrashReporting"
     # - xcode-test:
     #     title: Run benchmarks - DatadogBenchmarkTests on iOS Simulator
     #     inputs:
