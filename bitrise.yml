@@ -154,7 +154,7 @@ workflows:
         - content: |-
             #!/usr/bin/env zsh
             set -e
-            ./codecov -Q "bitrise-step-3.0.0" -Z -t ${CODECOV_TOKEN} -C "$BITRISE_GIT_COMMIT" -J "Datadog" -F "Datadog"
+            ./codecov -Q "bitrise-step-3.0.0" -Z -t ${CODECOV_TOKEN} -C "$BITRISE_GIT_COMMIT"
     - xcode-test:
         title: Run unit tests for DatadogCrashReporting - iOS Simulator
         inputs:
@@ -176,7 +176,7 @@ workflows:
         - content: |-
             #!/usr/bin/env zsh
             set -e
-            ./codecov -Q "bitrise-step-3.0.0" -Z -t ${CODECOV_TOKEN} -C "$BITRISE_GIT_COMMIT" -J "DatadogCrashReporting" -F "DatadogCrashReporting"
+            ./codecov -Q "bitrise-step-3.0.0" -Z -t ${CODECOV_TOKEN} -C "$BITRISE_GIT_COMMIT"
     # - xcode-test:
     #     title: Run benchmarks - DatadogBenchmarkTests on iOS Simulator
     #     inputs:
