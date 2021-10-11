@@ -146,6 +146,7 @@ workflows:
         run_if: .IsCI
         inputs:
         - CODECOV_TOKEN: ${CODECOV_TOKEN}
+        - OS: macos
         # - other_options: -C "$BITRISE_GIT_COMMIT" -J "Datadog" -F "Datadog"
     # - script:
     #     title: Send coverage report for `Datadog`
@@ -168,6 +169,7 @@ workflows:
         run_if: .IsCI
         inputs:
         - CODECOV_TOKEN: ${CODECOV_TOKEN}
+        - OS: macos
         # - other_options:  -C "$BITRISE_GIT_COMMIT" -J "DatadogCrashReporting" -F "DatadogCrashReporting"
     # - script:
     #     title: Send coverage report for `DatadogCrashReporting`
