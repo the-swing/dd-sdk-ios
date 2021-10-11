@@ -141,20 +141,20 @@ workflows:
         - generate_code_coverage_files: 'yes'
         - project_path: Datadog.xcworkspace
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/Datadog-unit-tests.html"
-    # - codecov@2.0.2:
-    #     title: Send coverage report for `Datadog`
-    #     run_if: .IsCI
-    #     inputs:
-    #     - CODECOV_TOKEN: ${CODECOV_TOKEN}
-    #     - other_options: -C "$BITRISE_GIT_COMMIT" -J "Datadog" -F "Datadog"
-    - script:
+    - codecov@3.1.2:
         title: Send coverage report for `Datadog`
         run_if: .IsCI
         inputs:
-        - content: |-
-            #!/usr/bin/env zsh
-            set -e
-            ./codecov -Q "bitrise-step-3.0.0" -Z -t ${CODECOV_TOKEN} -C "$BITRISE_GIT_COMMIT"
+        - CODECOV_TOKEN: ${CODECOV_TOKEN}
+        # - other_options: -C "$BITRISE_GIT_COMMIT" -J "Datadog" -F "Datadog"
+    # - script:
+    #     title: Send coverage report for `Datadog`
+    #     run_if: .IsCI
+    #     inputs:
+    #     - content: |-
+    #         #!/usr/bin/env zsh
+    #         set -e
+    #         ./codecov -Q "bitrise-step-3.0.0" -Z -t ${CODECOV_TOKEN} -C "$BITRISE_GIT_COMMIT"
     - xcode-test:
         title: Run unit tests for DatadogCrashReporting - iOS Simulator
         inputs:
@@ -163,20 +163,20 @@ workflows:
         - generate_code_coverage_files: 'yes'
         - project_path: Datadog.xcworkspace
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/DatadogCrashReporting-unit-tests.html"
-    # - codecov@2.0.2:
-    #     title: Send coverage report for `DatadogCrashReporting`
-    #     run_if: .IsCI
-    #     inputs:
-    #     - CODECOV_TOKEN: ${CODECOV_TOKEN}
-    #     - other_options:  -C "$BITRISE_GIT_COMMIT" -J "DatadogCrashReporting" -F "DatadogCrashReporting"
-    - script:
+    - codecov@3.1.2:
         title: Send coverage report for `DatadogCrashReporting`
         run_if: .IsCI
         inputs:
-        - content: |-
-            #!/usr/bin/env zsh
-            set -e
-            ./codecov -Q "bitrise-step-3.0.0" -Z -t ${CODECOV_TOKEN} -C "$BITRISE_GIT_COMMIT"
+        - CODECOV_TOKEN: ${CODECOV_TOKEN}
+        # - other_options:  -C "$BITRISE_GIT_COMMIT" -J "DatadogCrashReporting" -F "DatadogCrashReporting"
+    # - script:
+    #     title: Send coverage report for `DatadogCrashReporting`
+    #     run_if: .IsCI
+    #     inputs:
+    #     - content: |-
+    #         #!/usr/bin/env zsh
+    #         set -e
+    #         ./codecov -Q "bitrise-step-3.0.0" -Z -t ${CODECOV_TOKEN} -C "$BITRISE_GIT_COMMIT"
     # - xcode-test:
     #     title: Run benchmarks - DatadogBenchmarkTests on iOS Simulator
     #     inputs:
