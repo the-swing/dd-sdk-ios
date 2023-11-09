@@ -181,8 +181,12 @@ public struct RUMActionEvent: RUMDataModel {
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
             public let plan: Plan?
 
+            /// The precondition that led to the creation of the session
+            public let sessionPrecondition: RUMSessionPrecondition?
+
             enum CodingKeys: String, CodingKey {
                 case plan = "plan"
+                case sessionPrecondition = "session_precondition"
             }
 
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
@@ -557,8 +561,12 @@ public struct RUMErrorEvent: RUMDataModel {
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
             public let plan: Plan?
 
+            /// The precondition that led to the creation of the session
+            public let sessionPrecondition: RUMSessionPrecondition?
+
             enum CodingKeys: String, CodingKey {
                 case plan = "plan"
+                case sessionPrecondition = "session_precondition"
             }
 
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
@@ -1025,8 +1033,12 @@ public struct RUMLongTaskEvent: RUMDataModel {
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
             public let plan: Plan?
 
+            /// The precondition that led to the creation of the session
+            public let sessionPrecondition: RUMSessionPrecondition?
+
             enum CodingKeys: String, CodingKey {
                 case plan = "plan"
+                case sessionPrecondition = "session_precondition"
             }
 
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
@@ -1316,8 +1328,12 @@ public struct RUMResourceEvent: RUMDataModel {
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
             public let plan: Plan?
 
+            /// The precondition that led to the creation of the session
+            public let sessionPrecondition: RUMSessionPrecondition?
+
             enum CodingKeys: String, CodingKey {
                 case plan = "plan"
+                case sessionPrecondition = "session_precondition"
             }
 
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
@@ -1804,9 +1820,13 @@ public struct RUMViewEvent: RUMDataModel {
             /// The percentage of sessions tracked
             public let sessionSampleRate: Double
 
+            /// Whether session replay recording configured to start manually
+            public let startSessionReplayRecordingManually: Bool?
+
             enum CodingKeys: String, CodingKey {
                 case sessionReplaySampleRate = "session_replay_sample_rate"
                 case sessionSampleRate = "session_sample_rate"
+                case startSessionReplayRecordingManually = "start_session_replay_recording_manually"
             }
         }
 
@@ -1856,8 +1876,12 @@ public struct RUMViewEvent: RUMDataModel {
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
             public let plan: Plan?
 
+            /// The precondition that led to the creation of the session
+            public let sessionPrecondition: RUMSessionPrecondition?
+
             enum CodingKeys: String, CodingKey {
                 case plan = "plan"
+                case sessionPrecondition = "session_precondition"
             }
 
             /// Session plan: 1 is the plan without replay, 2 is the plan with replay (deprecated)
@@ -1964,9 +1988,6 @@ public struct RUMViewEvent: RUMDataModel {
         /// Whether this session has been sampled for replay
         public let sampledForReplay: Bool?
 
-        /// The precondition that led to the creation of the session
-        public let startPrecondition: StartPrecondition?
-
         /// Type of the session
         public let type: SessionType
 
@@ -1975,17 +1996,7 @@ public struct RUMViewEvent: RUMDataModel {
             case id = "id"
             case isActive = "is_active"
             case sampledForReplay = "sampled_for_replay"
-            case startPrecondition = "start_precondition"
             case type = "type"
-        }
-
-        /// The precondition that led to the creation of the session
-        public enum StartPrecondition: String, Codable {
-            case appLaunch = "app_launch"
-            case inactivityTimeout = "inactivity_timeout"
-            case maxDuration = "max_duration"
-            case explicitStop = "explicit_stop"
-            case backgroundEvent = "background_event"
         }
 
         /// Type of the session
@@ -2826,6 +2837,12 @@ public struct TelemetryConfigurationEvent: RUMDataModel {
             /// Whether untrusted events are allowed
             public let allowUntrustedEvents: Bool?
 
+            /// Whether UIApplication background tasks are enabled
+            public let backgroundTasksEnabled: Bool?
+
+            /// Maximum number of batches processed sequencially without a delay
+            public let batchProcessingLevel: Int64?
+
             /// The window duration for batches sent by the SDK (in milliseconds)
             public let batchSize: Int64?
 
@@ -2977,6 +2994,8 @@ public struct TelemetryConfigurationEvent: RUMDataModel {
                 case actionNameAttribute = "action_name_attribute"
                 case allowFallbackToLocalStorage = "allow_fallback_to_local_storage"
                 case allowUntrustedEvents = "allow_untrusted_events"
+                case backgroundTasksEnabled = "background_tasks_enabled"
+                case batchProcessingLevel = "batch_processing_level"
                 case batchSize = "batch_size"
                 case batchUploadFrequency = "batch_upload_frequency"
                 case dartVersion = "dart_version"
@@ -3138,6 +3157,17 @@ public struct TelemetryConfigurationEvent: RUMDataModel {
             case id = "id"
         }
     }
+}
+
+/// The precondition that led to the creation of the session
+public enum RUMSessionPrecondition: String, Codable {
+    case userAppLaunch = "user_app_launch"
+    case inactivityTimeout = "inactivity_timeout"
+    case maxDuration = "max_duration"
+    case backgroundLaunch = "background_launch"
+    case prewarm = "prewarm"
+    case fromNonInteractiveSession = "from_non_interactive_session"
+    case explicitStop = "explicit_stop"
 }
 
 /// CI Visibility properties
@@ -3398,4 +3428,4 @@ public enum RUMMethod: String, Codable {
     case patch = "PATCH"
 }
 
-// Generated from https://github.com/DataDog/rum-events-format/tree/f69ca4664ed6e69c929855d02c4ce3d4b85d0bb4
+// Generated from https://github.com/DataDog/rum-events-format/tree/d9624e702e86352babaf59979877f980eaccb8ff

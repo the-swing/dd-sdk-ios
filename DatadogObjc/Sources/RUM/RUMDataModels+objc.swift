@@ -209,6 +209,10 @@ public class DDRUMActionEventDDSession: NSObject {
     @objc public var plan: DDRUMActionEventDDSessionPlan {
         .init(swift: root.swiftModel.dd.session!.plan)
     }
+
+    @objc public var sessionPrecondition: DDRUMActionEventDDSessionRUMSessionPrecondition {
+        .init(swift: root.swiftModel.dd.session!.sessionPrecondition)
+    }
 }
 
 @objc
@@ -232,6 +236,44 @@ public enum DDRUMActionEventDDSessionPlan: Int {
     case none
     case plan1
     case plan2
+}
+
+@objc
+public enum DDRUMActionEventDDSessionRUMSessionPrecondition: Int {
+    internal init(swift: RUMSessionPrecondition?) {
+        switch swift {
+        case nil: self = .none
+        case .userAppLaunch?: self = .userAppLaunch
+        case .inactivityTimeout?: self = .inactivityTimeout
+        case .maxDuration?: self = .maxDuration
+        case .backgroundLaunch?: self = .backgroundLaunch
+        case .prewarm?: self = .prewarm
+        case .fromNonInteractiveSession?: self = .fromNonInteractiveSession
+        case .explicitStop?: self = .explicitStop
+        }
+    }
+
+    internal var toSwift: RUMSessionPrecondition? {
+        switch self {
+        case .none: return nil
+        case .userAppLaunch: return .userAppLaunch
+        case .inactivityTimeout: return .inactivityTimeout
+        case .maxDuration: return .maxDuration
+        case .backgroundLaunch: return .backgroundLaunch
+        case .prewarm: return .prewarm
+        case .fromNonInteractiveSession: return .fromNonInteractiveSession
+        case .explicitStop: return .explicitStop
+        }
+    }
+
+    case none
+    case userAppLaunch
+    case inactivityTimeout
+    case maxDuration
+    case backgroundLaunch
+    case prewarm
+    case fromNonInteractiveSession
+    case explicitStop
 }
 
 @objc
@@ -986,6 +1028,10 @@ public class DDRUMErrorEventDDSession: NSObject {
     @objc public var plan: DDRUMErrorEventDDSessionPlan {
         .init(swift: root.swiftModel.dd.session!.plan)
     }
+
+    @objc public var sessionPrecondition: DDRUMErrorEventDDSessionRUMSessionPrecondition {
+        .init(swift: root.swiftModel.dd.session!.sessionPrecondition)
+    }
 }
 
 @objc
@@ -1009,6 +1055,44 @@ public enum DDRUMErrorEventDDSessionPlan: Int {
     case none
     case plan1
     case plan2
+}
+
+@objc
+public enum DDRUMErrorEventDDSessionRUMSessionPrecondition: Int {
+    internal init(swift: RUMSessionPrecondition?) {
+        switch swift {
+        case nil: self = .none
+        case .userAppLaunch?: self = .userAppLaunch
+        case .inactivityTimeout?: self = .inactivityTimeout
+        case .maxDuration?: self = .maxDuration
+        case .backgroundLaunch?: self = .backgroundLaunch
+        case .prewarm?: self = .prewarm
+        case .fromNonInteractiveSession?: self = .fromNonInteractiveSession
+        case .explicitStop?: self = .explicitStop
+        }
+    }
+
+    internal var toSwift: RUMSessionPrecondition? {
+        switch self {
+        case .none: return nil
+        case .userAppLaunch: return .userAppLaunch
+        case .inactivityTimeout: return .inactivityTimeout
+        case .maxDuration: return .maxDuration
+        case .backgroundLaunch: return .backgroundLaunch
+        case .prewarm: return .prewarm
+        case .fromNonInteractiveSession: return .fromNonInteractiveSession
+        case .explicitStop: return .explicitStop
+        }
+    }
+
+    case none
+    case userAppLaunch
+    case inactivityTimeout
+    case maxDuration
+    case backgroundLaunch
+    case prewarm
+    case fromNonInteractiveSession
+    case explicitStop
 }
 
 @objc
@@ -1985,6 +2069,10 @@ public class DDRUMLongTaskEventDDSession: NSObject {
     @objc public var plan: DDRUMLongTaskEventDDSessionPlan {
         .init(swift: root.swiftModel.dd.session!.plan)
     }
+
+    @objc public var sessionPrecondition: DDRUMLongTaskEventDDSessionRUMSessionPrecondition {
+        .init(swift: root.swiftModel.dd.session!.sessionPrecondition)
+    }
 }
 
 @objc
@@ -2008,6 +2096,44 @@ public enum DDRUMLongTaskEventDDSessionPlan: Int {
     case none
     case plan1
     case plan2
+}
+
+@objc
+public enum DDRUMLongTaskEventDDSessionRUMSessionPrecondition: Int {
+    internal init(swift: RUMSessionPrecondition?) {
+        switch swift {
+        case nil: self = .none
+        case .userAppLaunch?: self = .userAppLaunch
+        case .inactivityTimeout?: self = .inactivityTimeout
+        case .maxDuration?: self = .maxDuration
+        case .backgroundLaunch?: self = .backgroundLaunch
+        case .prewarm?: self = .prewarm
+        case .fromNonInteractiveSession?: self = .fromNonInteractiveSession
+        case .explicitStop?: self = .explicitStop
+        }
+    }
+
+    internal var toSwift: RUMSessionPrecondition? {
+        switch self {
+        case .none: return nil
+        case .userAppLaunch: return .userAppLaunch
+        case .inactivityTimeout: return .inactivityTimeout
+        case .maxDuration: return .maxDuration
+        case .backgroundLaunch: return .backgroundLaunch
+        case .prewarm: return .prewarm
+        case .fromNonInteractiveSession: return .fromNonInteractiveSession
+        case .explicitStop: return .explicitStop
+        }
+    }
+
+    case none
+    case userAppLaunch
+    case inactivityTimeout
+    case maxDuration
+    case backgroundLaunch
+    case prewarm
+    case fromNonInteractiveSession
+    case explicitStop
 }
 
 @objc
@@ -2639,6 +2765,10 @@ public class DDRUMResourceEventDDSession: NSObject {
     @objc public var plan: DDRUMResourceEventDDSessionPlan {
         .init(swift: root.swiftModel.dd.session!.plan)
     }
+
+    @objc public var sessionPrecondition: DDRUMResourceEventDDSessionRUMSessionPrecondition {
+        .init(swift: root.swiftModel.dd.session!.sessionPrecondition)
+    }
 }
 
 @objc
@@ -2662,6 +2792,44 @@ public enum DDRUMResourceEventDDSessionPlan: Int {
     case none
     case plan1
     case plan2
+}
+
+@objc
+public enum DDRUMResourceEventDDSessionRUMSessionPrecondition: Int {
+    internal init(swift: RUMSessionPrecondition?) {
+        switch swift {
+        case nil: self = .none
+        case .userAppLaunch?: self = .userAppLaunch
+        case .inactivityTimeout?: self = .inactivityTimeout
+        case .maxDuration?: self = .maxDuration
+        case .backgroundLaunch?: self = .backgroundLaunch
+        case .prewarm?: self = .prewarm
+        case .fromNonInteractiveSession?: self = .fromNonInteractiveSession
+        case .explicitStop?: self = .explicitStop
+        }
+    }
+
+    internal var toSwift: RUMSessionPrecondition? {
+        switch self {
+        case .none: return nil
+        case .userAppLaunch: return .userAppLaunch
+        case .inactivityTimeout: return .inactivityTimeout
+        case .maxDuration: return .maxDuration
+        case .backgroundLaunch: return .backgroundLaunch
+        case .prewarm: return .prewarm
+        case .fromNonInteractiveSession: return .fromNonInteractiveSession
+        case .explicitStop: return .explicitStop
+        }
+    }
+
+    case none
+    case userAppLaunch
+    case inactivityTimeout
+    case maxDuration
+    case backgroundLaunch
+    case prewarm
+    case fromNonInteractiveSession
+    case explicitStop
 }
 
 @objc
@@ -3639,6 +3807,10 @@ public class DDRUMViewEventDDConfiguration: NSObject {
     @objc public var sessionSampleRate: NSNumber {
         root.swiftModel.dd.configuration!.sessionSampleRate as NSNumber
     }
+
+    @objc public var startSessionReplayRecordingManually: NSNumber? {
+        root.swiftModel.dd.configuration!.startSessionReplayRecordingManually as NSNumber?
+    }
 }
 
 @objc
@@ -3720,6 +3892,10 @@ public class DDRUMViewEventDDSession: NSObject {
     @objc public var plan: DDRUMViewEventDDSessionPlan {
         .init(swift: root.swiftModel.dd.session!.plan)
     }
+
+    @objc public var sessionPrecondition: DDRUMViewEventDDSessionRUMSessionPrecondition {
+        .init(swift: root.swiftModel.dd.session!.sessionPrecondition)
+    }
 }
 
 @objc
@@ -3743,6 +3919,44 @@ public enum DDRUMViewEventDDSessionPlan: Int {
     case none
     case plan1
     case plan2
+}
+
+@objc
+public enum DDRUMViewEventDDSessionRUMSessionPrecondition: Int {
+    internal init(swift: RUMSessionPrecondition?) {
+        switch swift {
+        case nil: self = .none
+        case .userAppLaunch?: self = .userAppLaunch
+        case .inactivityTimeout?: self = .inactivityTimeout
+        case .maxDuration?: self = .maxDuration
+        case .backgroundLaunch?: self = .backgroundLaunch
+        case .prewarm?: self = .prewarm
+        case .fromNonInteractiveSession?: self = .fromNonInteractiveSession
+        case .explicitStop?: self = .explicitStop
+        }
+    }
+
+    internal var toSwift: RUMSessionPrecondition? {
+        switch self {
+        case .none: return nil
+        case .userAppLaunch: return .userAppLaunch
+        case .inactivityTimeout: return .inactivityTimeout
+        case .maxDuration: return .maxDuration
+        case .backgroundLaunch: return .backgroundLaunch
+        case .prewarm: return .prewarm
+        case .fromNonInteractiveSession: return .fromNonInteractiveSession
+        case .explicitStop: return .explicitStop
+        }
+    }
+
+    case none
+    case userAppLaunch
+    case inactivityTimeout
+    case maxDuration
+    case backgroundLaunch
+    case prewarm
+    case fromNonInteractiveSession
+    case explicitStop
 }
 
 @objc
@@ -4107,45 +4321,9 @@ public class DDRUMViewEventSession: NSObject {
         root.swiftModel.session.sampledForReplay as NSNumber?
     }
 
-    @objc public var startPrecondition: DDRUMViewEventSessionStartPrecondition {
-        .init(swift: root.swiftModel.session.startPrecondition)
-    }
-
     @objc public var type: DDRUMViewEventSessionSessionType {
         .init(swift: root.swiftModel.session.type)
     }
-}
-
-@objc
-public enum DDRUMViewEventSessionStartPrecondition: Int {
-    internal init(swift: RUMViewEvent.Session.StartPrecondition?) {
-        switch swift {
-        case nil: self = .none
-        case .appLaunch?: self = .appLaunch
-        case .inactivityTimeout?: self = .inactivityTimeout
-        case .maxDuration?: self = .maxDuration
-        case .explicitStop?: self = .explicitStop
-        case .backgroundEvent?: self = .backgroundEvent
-        }
-    }
-
-    internal var toSwift: RUMViewEvent.Session.StartPrecondition? {
-        switch self {
-        case .none: return nil
-        case .appLaunch: return .appLaunch
-        case .inactivityTimeout: return .inactivityTimeout
-        case .maxDuration: return .maxDuration
-        case .explicitStop: return .explicitStop
-        case .backgroundEvent: return .backgroundEvent
-        }
-    }
-
-    case none
-    case appLaunch
-    case inactivityTimeout
-    case maxDuration
-    case explicitStop
-    case backgroundEvent
 }
 
 @objc
@@ -5204,6 +5382,14 @@ public class DDTelemetryConfigurationEventTelemetryConfiguration: NSObject {
         root.swiftModel.telemetry.configuration.allowUntrustedEvents as NSNumber?
     }
 
+    @objc public var backgroundTasksEnabled: NSNumber? {
+        root.swiftModel.telemetry.configuration.backgroundTasksEnabled as NSNumber?
+    }
+
+    @objc public var batchProcessingLevel: NSNumber? {
+        root.swiftModel.telemetry.configuration.batchProcessingLevel as NSNumber?
+    }
+
     @objc public var batchSize: NSNumber? {
         root.swiftModel.telemetry.configuration.batchSize as NSNumber?
     }
@@ -5544,4 +5730,4 @@ public class DDTelemetryConfigurationEventView: NSObject {
 
 // swiftlint:enable force_unwrapping
 
-// Generated from https://github.com/DataDog/rum-events-format/tree/f69ca4664ed6e69c929855d02c4ce3d4b85d0bb4
+// Generated from https://github.com/DataDog/rum-events-format/tree/d9624e702e86352babaf59979877f980eaccb8ff

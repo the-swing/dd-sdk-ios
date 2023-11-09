@@ -23,6 +23,7 @@ public class RUMCodeDecorator: SwiftCodeDecorator {
                 "RUMDevice",
                 "RUMOperatingSystem",
                 "RUMActionID",
+                "RUMSessionPrecondition",
             ]
         )
     }
@@ -106,6 +107,10 @@ public class RUMCodeDecorator: SwiftCodeDecorator {
         // context we generate single root type: `RUMActionID`.
         if fixedName == "ID", let parentStructName = (context.parent as? SwiftStruct)?.name, parentStructName == "action" {
             fixedName = "RUMActionID"
+        }
+
+        if fixedName == "SessionPrecondition" {
+            fixedName = "RUMSessionPrecondition"
         }
 
         return fixedName

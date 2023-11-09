@@ -335,7 +335,10 @@ internal struct CrashReportReceiver: FeatureMessageReceiver {
             dd: .init(
                 browserSdkVersion: nil,
                 configuration: .init(sessionReplaySampleRate: nil, sessionSampleRate: Double(self.sessionSampler.samplingRate)),
-                session: .init(plan: .plan1)
+                session: .init(
+                    plan: .plan1,
+                    sessionPrecondition: nil
+                )
             ),
             action: nil,
             application: .init(id: lastRUMView.application.id),
@@ -389,11 +392,18 @@ internal struct CrashReportReceiver: FeatureMessageReceiver {
         return RUMViewEvent(
             dd: .init(
                 browserSdkVersion: nil,
-                configuration: .init(sessionReplaySampleRate: nil, sessionSampleRate: Double(self.sessionSampler.samplingRate)),
+                configuration: .init(
+                    sessionReplaySampleRate: nil,
+                    sessionSampleRate: Double(self.sessionSampler.samplingRate),
+                    startSessionReplayRecordingManually: nil
+                ),
                 documentVersion: original.dd.documentVersion + 1,
                 pageStates: nil,
                 replayStats: nil,
-                session: .init(plan: .plan1)
+                session: .init(
+                    plan: .plan1,
+                    sessionPrecondition: nil
+                )
             ),
             application: original.application,
             buildVersion: original.buildVersion,
@@ -472,11 +482,18 @@ internal struct CrashReportReceiver: FeatureMessageReceiver {
         return RUMViewEvent(
             dd: .init(
                 browserSdkVersion: nil,
-                configuration: .init(sessionReplaySampleRate: nil, sessionSampleRate: Double(self.sessionSampler.samplingRate)),
+                configuration: .init(
+                    sessionReplaySampleRate: nil,
+                    sessionSampleRate: Double(self.sessionSampler.samplingRate),
+                    startSessionReplayRecordingManually: nil
+                ),
                 documentVersion: 1,
                 pageStates: nil,
                 replayStats: nil,
-                session: .init(plan: .plan1)
+                session: .init(
+                    plan: .plan1,
+                    sessionPrecondition: nil
+                )
             ),
             application: .init(
                 id: applicationID
@@ -503,7 +520,6 @@ internal struct CrashReportReceiver: FeatureMessageReceiver {
                 id: sessionUUID.toRUMDataFormat,
                 isActive: true,
                 sampledForReplay: nil,
-                startPrecondition: nil,
                 type: ciTest != nil ? .ciTest : .user
             ),
             source: .init(rawValue: context.source) ?? .ios,
