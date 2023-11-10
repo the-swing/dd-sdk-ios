@@ -724,6 +724,7 @@ extension RUMSessionScope {
         isInitialSession: Bool = .mockAny(),
         parent: RUMContextProvider = RUMContextProviderMock(),
         startTime: Date = .mockAny(),
+        startPrecondition: RUMSessionPrecondition? = .userAppLaunch,
         dependencies: RUMScopeDependencies = .mockAny(),
         hasReplay: Bool? = .mockAny()
     ) -> RUMSessionScope {
@@ -731,6 +732,7 @@ extension RUMSessionScope {
             isInitialSession: isInitialSession,
             parent: parent,
             startTime: startTime,
+            startPrecondition: startPrecondition,
             dependencies: dependencies,
             hasReplay: hasReplay
         )
