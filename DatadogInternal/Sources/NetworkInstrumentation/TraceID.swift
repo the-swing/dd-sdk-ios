@@ -9,6 +9,10 @@ import Foundation
 public typealias SpanID = TraceID
 
 public struct TraceID: RawRepresentable, Equatable, Hashable {
+    public init?(rawValue: String) {
+        self.init(rawValue)
+    }
+    
     /// The `String` representation format of a `TraceID`.
     public enum Representation {
         case decimal
@@ -16,16 +20,26 @@ public struct TraceID: RawRepresentable, Equatable, Hashable {
         case hexadecimal16Chars
         case hexadecimal32Chars
     }
+    
+    public var hexString: String {
+        return String(format: "%016llx%016llx", idHi, idLo)
+    }
 
-    /// The unique integer (64-bit unsigned) ID of the trace containing this span.
-    /// - See also: [Datadog API Reference - Send Traces](https://docs.datadoghq.com/api/?lang=bash#send-traces)
-    public let rawValue: UInt64
+    public static let invalidId: UInt64 = 0
+    
+    public var rawValue: String {
+        hexString
+    }
+
+    public private(set) var idHi: UInt64 = invalidId
+    public private(set) var idLo: UInt64 = invalidId
 
     /// Creates a new instance with the specified raw value.
     ///
     /// - Parameter rawValue: The raw value to use for the new instance.
-    public init(rawValue: UInt64) {
-        self.rawValue = rawValue
+    public init(idHi: UInt64, idLo: UInt64) {
+        self.idHi = idHi
+        self.idLo = idLo
     }
 }
 
@@ -35,22 +49,38 @@ extension TraceID {
     /// - Parameters:
     ///   - string: The `String` representation.
     ///   - representation: The representation, `.decimal` by default.
-    public init?(_ string: String, representation: Representation = .decimal) {
+    public init?(_ string: String, representation: Representation = .decimal, withOffset offset: Int = 0) {
         switch representation {
         case .decimal:
             guard let rawValue = UInt64(string) else {
                 return nil
             }
 
-            self.init(rawValue: rawValue)
+            self.init(integerLiteral: rawValue)
         case .hexadecimal, .hexadecimal16Chars, .hexadecimal32Chars:
-            guard let rawValue = UInt64(string, radix: 16) else {
-                return nil
+            let hex = string
+            if hex.count >= 32 + offset {
+                let firstIndex = hex.index(hex.startIndex, offsetBy: offset)
+                let secondIndex = hex.index(firstIndex, offsetBy: 16)
+                let thirdIndex = hex.index(secondIndex, offsetBy: 16)
+                if let idHi = UInt64(hex[firstIndex ..< secondIndex], radix: 16),
+                    let idLo = UInt64(hex[secondIndex ..< thirdIndex], radix: 16) {
+                    self.init(idHi: idHi, idLo: idLo)
+                    return
+                }
+            } else if hex.count >= 16 + offset {
+                let firstIndex = hex.index(hex.startIndex, offsetBy: offset)
+                let secondIndex = hex.index(firstIndex, offsetBy: 16)
+                if let idLo = UInt64(hex[firstIndex ..< secondIndex], radix: 16) {
+                    self.init(idHi: 0, idLo: idLo)
+                    return
+                }
             }
-
-            self.init(rawValue: rawValue)
+            self.init()
         }
     }
+    
+    public init() {}
 }
 
 extension TraceID: ExpressibleByIntegerLiteral {
@@ -66,7 +96,7 @@ extension TraceID: ExpressibleByIntegerLiteral {
     ///
     /// - Parameter value: The value to create.
     public init(integerLiteral value: UInt64) {
-        self.init(rawValue: value)
+        self.init(idHi: TraceID.invalidId, idLo: value)
     }
 }
 
@@ -81,7 +111,7 @@ extension String {
         case .decimal:
             self.init(traceID.rawValue)
         case .hexadecimal:
-            self.init(traceID.rawValue, radix: 16)
+            self.init(traceID.rawValue)
         case .hexadecimal16Chars:
             self.init(format: "%016llx", traceID.rawValue)
         case .hexadecimal32Chars:
@@ -110,7 +140,7 @@ public struct DefaultTraceIDGenerator: TraceIDGenerator {
     let range: ClosedRange<UInt64>
 
     /// Creates a default generator.
-    /// 
+    ///
     /// - Parameter range: The generator's range.
     public init(range: ClosedRange<UInt64> = Self.defaultGenerationRange) {
         self.range = range
@@ -122,6 +152,12 @@ public struct DefaultTraceIDGenerator: TraceIDGenerator {
     ///
     /// - Returns: The generated `TraceID`
     public func generate() -> TraceID {
-        return TraceID(rawValue: .random(in: range))
+        var idHi: UInt64
+        var idLo: UInt64
+        repeat {
+            idHi = UInt64.random(in: .min ... .max)
+            idLo = UInt64.random(in: .min ... .max)
+        } while idHi == TraceID.invalidId && idLo == TraceID.invalidId
+        return TraceID(idHi: idHi, idLo: idLo)
    }
 }

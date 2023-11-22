@@ -74,7 +74,7 @@ public class W3CHTTPHeadersWriter: TracePropagationHeadersWriter {
 
         traceHeaderFields[W3CHTTPHeaders.traceparent] = [
             Constants.version,
-            String(traceID, representation: .hexadecimal32Chars),
+            traceID.hexString,
             String(spanID, representation: .hexadecimal16Chars),
             sampled ? Constants.sampledValue : Constants.unsampledValue
         ]

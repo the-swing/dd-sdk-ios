@@ -157,7 +157,7 @@ internal struct SpanEventEncoder {
         try container.encode(String(span.traceID, representation: .hexadecimal), forKey: .traceID)
         try container.encode(String(span.spanID, representation: .hexadecimal), forKey: .spanID)
 
-        let parentSpanID = span.parentID ?? TraceID(rawValue: 0) // 0 is a reserved ID for a root span (ref: DDTracer.java#L600)
+        let parentSpanID = span.parentID ?? TraceID() // 0 is a reserved ID for a root span (ref: DDTracer.java#L600)
         try container.encode(String(parentSpanID, representation: .hexadecimal), forKey: .parentID)
 
         try container.encode(span.operationName, forKey: .operationName)

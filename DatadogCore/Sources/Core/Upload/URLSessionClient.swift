@@ -36,10 +36,38 @@ internal class URLSessionClient: HTTPClient {
     }
 
     func send(request: URLRequest, completion: @escaping (Result<HTTPURLResponse, Error>) -> Void) {
+        print("🔥 \(request.debugDescription)")
         let task = session.dataTask(with: request) { data, response, error in
             completion(httpClientResult(for: (data, response, error)))
         }
         task.resume()
+    }
+}
+
+extension URLRequest {
+    var debugDescription: String {
+        var description = """
+        \(httpMethod ?? "GET") \(url?.absoluteString ?? "nil")
+        """
+        if let headers = allHTTPHeaderFields {
+            description += "\nHeaders:"
+            for (key, value) in headers {
+                description += "\n\t\(key): \(value)"
+            }
+        }
+        if let body = httpBody {
+            description += "\nBody:"
+            // prettify body
+            if let json = try? JSONSerialization.jsonObject(with: body, options: []),
+               let data = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]),
+               let prettyPrinted = String(data: data, encoding: .utf8)
+            {
+                description += "\n\(prettyPrinted)"
+            } else {
+                description += "\n\(String(data: body, encoding: .utf8) ?? "nil")"
+            }
+        }
+        return description
     }
 }
 

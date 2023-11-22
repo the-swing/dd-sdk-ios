@@ -123,7 +123,7 @@ public struct URLRequestBuilder {
     /// - Parameter body: HTTP body to be attached to request
     /// - Parameter compress: if `body` should be compressed into ZLIB Compressed Data Format (IETF RFC 1950)
     /// - Returns: the `URLRequest` object.
-    public func uploadRequest(with body: Data, compress: Bool = true) -> URLRequest {
+    public func uploadRequest(with body: Data, compress: Bool = false) -> URLRequest {
         var request = URLRequest(url: url)
         var headers: [String: String] = [:]
         self.headers.forEach { headers[$0.field] = $0.value() }

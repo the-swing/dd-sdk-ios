@@ -16,8 +16,8 @@ public class HTTPHeadersReader: TracePropagationHeadersReader {
     public func read() -> (traceID: TraceID, spanID: SpanID, parentSpanID: SpanID?)? {
         guard let traceIDValue = httpHeaderFields[TracingHTTPHeaders.traceIDField],
               let spanIDValue = httpHeaderFields[TracingHTTPHeaders.parentSpanIDField],
-              let traceID = TraceID(traceIDValue),
-              let spanID = TraceID(spanIDValue)
+              let traceID = TraceID(traceIDValue, representation: .hexadecimal32Chars),
+              let spanID = TraceID(spanIDValue, representation: .hexadecimal32Chars)
         else {
             return nil
         }
