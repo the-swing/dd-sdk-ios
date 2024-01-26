@@ -16,7 +16,7 @@ ENV info:
     - xcode-select -p # default Xcode
     - ls /Applications/ | grep Xcode # other Xcodes
     - xcodebuild -workspace "$DD_WORKSPACE" -scheme 'DatadogCore iOS' -showdestinations -quiet # installed iOS destinations
-    - xcodebuild -workspace "'$DD_WORKSPACE'" -scheme 'DatadogCore tvOS' -showdestinations -quiet # installed tvOS destinations
+    - xcodebuild -workspace "$DD_WORKSPACE" -scheme 'DatadogCore tvOS' -showdestinations -quiet # installed tvOS destinations
     - xcbeautify --version
     - swiftlint --version
     - carthage version
@@ -43,7 +43,7 @@ SDK unit tests:
   script:
     - carthage bootstrap --platform iOS,tvOS --use-xcframeworks
     # - make source-xcconfigs
-    - xcodebuild -workspace '$DD_WORKSPACE' -scheme '$TEST_SCHEME' -destination 'platform=$TEST_PLATFORM,name=$TEST_DEVICE_NAME' test | xcbeautify
+    - xcodebuild -workspace "$DD_WORKSPACE" -scheme "$TEST_SCHEME" -destination "platform=$TEST_PLATFORM,name=$TEST_DEVICE_NAME" test | xcbeautify
 
 # SDK integration tests:
 #   stage: test
