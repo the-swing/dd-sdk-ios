@@ -1,3 +1,6 @@
+variables:
+  DD_WORKSPACE: "Datadog.xcworkspace"
+
 stages:
   - info
   - lint
@@ -10,8 +13,10 @@ ENV info:
   script:
     - system_profiler SPSoftwareDataType # system info
     - xcodebuild -version
-    - xcode-select -p # default Xcode version
+    - xcode-select -p # default Xcode
     - ls /Applications/ | grep Xcode # other Xcodes
+    - xcodebuild -workspace '$DD_WORKSPACE' -scheme 'DatadogCore iOS' -showdestinations -quiet # installed iOS destinations
+    - xcodebuild -workspace '$DD_WORKSPACE' -scheme 'DatadogCore tvOS' -showdestinations -quiet # installed tvOS destinations
     - xcbeautify --version
     - swiftlint --version
     - carthage version
@@ -28,19 +33,17 @@ Lint:
     - ./tools/lint/run-linter.sh
     - ./tools/license/check-license.sh
 
-# SDK unit tests:
-#   stage: test
-#   tags:
-#     - mac-ventura-preview
-#   variables:
-#     TEST_WORKSPACE: "Datadog.xcworkspace"
-#     TEST_PLATFORM: "iOS Simulator"
-#     TEST_DEVICE_NAME: "iPhone 15,OS=17.0.1"
-#   script:
-#     - carthage bootstrap --platform iOS,tvOS --use-xcframeworks
-#     - make source-xcconfigs
-#     - xcodebuild -workspace '$TEST_WORKSPACE' -scheme 'DatadogCore iOS' -showdestinations
-#     - xcodebuild -workspace '$TEST_WORKSPACE' -scheme '$TEST_SCHEME' -destination 'platform=$TEST_PLATFORM,name=$TEST_DEVICE_NAME' test | xcbeautify
+SDK unit tests:
+  stage: test
+  tags:
+    - mac-ventura-preview
+  variables:
+    TEST_PLATFORM: "iOS Simulator"
+    TEST_DEVICE_NAME: "iPhone 15,OS=17.0.1"
+  script:
+    - carthage bootstrap --platform iOS,tvOS --use-xcframeworks
+    # - make source-xcconfigs
+    - xcodebuild -workspace '$DD_WORKSPACE' -scheme '$TEST_SCHEME' -destination 'platform=$TEST_PLATFORM,name=$TEST_DEVICE_NAME' test | xcbeautify
 
 # SDK integration tests:
 #   stage: test
