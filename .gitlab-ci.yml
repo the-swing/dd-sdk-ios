@@ -33,17 +33,17 @@ Lint:
     - ./tools/lint/run-linter.sh
     - ./tools/license/check-license.sh
 
-SDK unit tests:
+SDK unit tests (iOS):
   stage: test
   tags:
     - mac-ventura-preview
   variables:
     TEST_PLATFORM: "iOS Simulator"
-    TEST_DEVICE_NAME: "iPhone 15,OS=17.0.1"
+    TEST_DEVICE_NAME: "iPhone 15 Pro Max,OS=17.0.1"
   script:
     - carthage bootstrap --platform iOS,tvOS --use-xcframeworks
     # - make source-xcconfigs
-    - xcodebuild -workspace "$DD_WORKSPACE" -scheme "$TEST_SCHEME" -destination "platform=$TEST_PLATFORM,name=$TEST_DEVICE_NAME" test | xcbeautify
+    - xcodebuild -workspace "$DD_WORKSPACE" -scheme "DatadogCore iOS" -destination "platform=$TEST_PLATFORM,name=$TEST_DEVICE_NAME" test | xcbeautify
 
 # SDK integration tests:
 #   stage: test
