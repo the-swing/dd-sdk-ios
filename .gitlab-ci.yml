@@ -41,8 +41,8 @@ SDK unit tests (iOS):
     TEST_PLATFORM: "iOS Simulator"
     TEST_DEVICE_NAME: "iPhone 15 Pro Max,OS=17.0.1"
   script:
-    - carthage bootstrap --platform iOS,tvOS --use-xcframeworks
-    # - make source-xcconfigs
+    - make gitlab-ci
+    - carthage bootstrap --platform iOS --use-xcframeworks
     - xcodebuild -workspace "$DD_WORKSPACE" -scheme "DatadogCore iOS" -destination "platform=$TEST_PLATFORM,name=$TEST_DEVICE_NAME" test | xcbeautify
 
 # SDK integration tests:
