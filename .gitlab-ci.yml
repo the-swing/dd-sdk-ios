@@ -3,20 +3,20 @@ stages:
   - lint
   - test
 
-Runner info:
+ENV info:
   stage: info
   tags:
     - mac-ventura-preview
   script:
-    - system_profiler SPSoftwareDataType # print system info
+    - system_profiler SPSoftwareDataType # system info
     - xcodebuild -version
     - xcode-select -p
-    - gh --version
-    - bundler --version
+    - xcbeautify --version
     - swiftlint --version
     - carthage version
+    - gh --version
     - brew -v
-    - xcbeautify -v
+    - bundler --version
     - python3 -V
 
 Lint:
